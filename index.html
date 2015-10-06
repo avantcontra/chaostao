@@ -1,0 +1,29 @@
+<!doctype HTML>
+<html>
+  <head>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+    <script src="js/webpd-latest.min.js"></script>
+    <!-- <script type="text/javascript" src="../../dist/webpd-latest.min.js"></script> -->
+    <script type="text/javascript" src="examples/assets/examples.js"></script>
+
+  </head>
+
+  <body><div id="loading">Loading ...</div>
+    <button id="startButton">Start</button>
+    
+    <div id="pdfuNote">Patch rendered to SVG using <a href="https://github.com/sebpiq/pd-fileutils">pd-fileutils</a></div>
+    <div id="svg"></div>
+
+    <script type="text/javascript">
+      webPdExamples.init()
+    
+      var patch
+      $.get('patches/chaos_0.925_without_tab.pd', function(mainStr) {
+        // Loading the patch
+        patch = Pd.loadPatch(mainStr)
+
+        webPdExamples.patchLoaded(mainStr)
+      })
+    </script>
+    </body>
