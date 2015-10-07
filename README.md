@@ -26,7 +26,7 @@ Programming Language is `Pure Data (Pd vanilla)`, using `WebPd` to play in web b
 
 
 ##### Reference
-[algorithmiccomposer.com](algorithmiccomposer.com/2011/08/chaos-in-max-and-puredata.html)
+[algorithmiccomposer.com](http://algorithmiccomposer.com/2011/08/chaos-in-max-and-puredata.html)
 
 ##### Run on local machine
 Getting files with Ajax might fail on local machine. Start a local server and access all the example web pages through it.
