@@ -1,8 +1,8 @@
-<!doctype HTML>
+<!doctype html>
 <html>
   <head>
   <meta charset="utf-8">
-    <title>Chaos, webpd, 0.925</title>
+    <title>Chaos Tao - an algorithmic music generator</title>
     
     <script src="js/jquery-2.1.4.min.js"></script>
     <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
@@ -12,12 +12,21 @@
 
   </head>
 
-  <body><div id="loading">Loading ...</div>
-    <button id="startButton">Start</button>
-    
-    <div id="pdfuNote">Patch rendered to SVG using <a href="https://github.com/sebpiq/pd-fileutils">pd-fileutils</a></div>
-    <div id="svg"></div>
+  <body>
+    <div id="loading">Loading ...</div>
 
+    <div id="des">"Chaos Tao" is an algorithmic music generator.
+      <br/>It generates a series midi sequences in real time, then play them out and output the midi notes.<br/>
+      You can open a midi synthesiser to get more sound effects.
+    </div>
+    <div>
+      More info here: <a href="https://github.com/avantcontra/chaostao" target="_blank">github.com/avantcontra/chaostao</a> 
+    </div>
+    <br/>
+    <button id="startButton">Click to Start</button>
+    
+    <div id="svg"></div>
+    <div id="pdfuNote">Pd patch rendered to SVG using <a href="https://github.com/sebpiq/pd-fileutils">pd-fileutils</a></div>
     <script type="text/javascript">
       webPdExamples.init()
     
@@ -28,6 +37,52 @@
 
         webPdExamples.patchLoaded(mainStr)
       })
+
+      var context=null;   // the Web Audio "context" object
+      var midiAccess=null;  // the MIDIAccess object.
+      window.addEventListener('load', function() {
+      // patch up prefixes
+        window.AudioContext=window.AudioContext||window.webkitAudioContext;
+        context = new AudioContext();
+        if (navigator.requestMIDIAccess)
+          navigator.requestMIDIAccess().then( onMIDIInit, onMIDIReject );
+        else
+          alert("No MIDI support present in your browser.  You're gonna have a bad time.")
+      // set up the basic oscillator chain, muted to begin with.
+      } );
+
+      function onMIDIInit(midi) {
+        midiAccess = midi;
+        hookUpMIDIOutput();
+        midiAccess.onstatechange=hookUpMIDIOutput;
+      }
+
+      function onMIDIReject(err) {
+        alert("The MIDI system failed to start.  You're gonna have a bad time.");
+      }
+
+      function hookUpMIDIOutput() {
+        //console.log(" in hookUpMIDIOutput");
+        var haveAtLeastOneDevice=false;
+
+        for (var input of midiAccess.outputs.values()) {
+          input.send( [0x90, 80, 0x64] );//0x90, 60, 0x7f
+          haveAtLeastOneDevice = true;
+
+          console.log( "Output port [type:'" + input.type + "'] id:'" + input.id +
+          "' manufacturer:'" + input.manufacturer + "' name:'" + input.name +
+          "' version:'" + input.version + "'" );
+        }
+
+        Pd.receive('midiout', function(args) {
+          console.log('received a message from "midiout" : ', args)
+          for (var input of midiAccess.outputs.values()) {
+            input.send( [0x90, args, 0x64] );//0x90, 60, 0x7f
+            haveAtLeastOneDevice = true;
+
+          }
+        })
+      }
     </script>
-    </body>
-    </html>
+  </body>
+</html>
