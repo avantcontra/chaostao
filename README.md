@@ -1,6 +1,6 @@
 ### Chaos Tao
 ----
-"Chaos Tao" is pieces of generative or algorithmic music.
+"Chaos Tao" is an algorithmic music generator.
 
 It generates a series midi sequences in real time, then play them out and output the midi notes.
 
@@ -28,7 +28,4 @@ Programming Language is `Pure Data (Pd vanilla)`, using `WebPd` to play in web b
 
 
 ##### Reference
-
-
-##### Author
-Contra @avantcontra
+[algorithmiccomposer.com](algorithmiccomposer.com/2011/08/chaos-in-max-and-puredata.html)
