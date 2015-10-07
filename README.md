@@ -4,7 +4,7 @@
 
 It generates a series midi sequences in real time, then play them out and output the midi notes.
 
-[Try it here](http://chaostao.org/pd/).
+[Try it here](http://chaostao.org/pd/)
 
 <br>
 
@@ -31,3 +31,6 @@ Programming Language is `Pure Data (Pd vanilla)`, using `WebPd` to play in web b
 ##### Run on local machine
 Getting files with Ajax might fail on local machine. Start a local server and access all the example web pages through it.
 [Check detail setup](https://github.com/sebpiq/WebPd#i-cant-run-any-webpd-demo-on-my-computer).
+
+----
+cheers~ <br>Contra @avantcontra www.contra.im dadadaluo[at]gmail.com
