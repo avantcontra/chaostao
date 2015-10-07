@@ -4,12 +4,9 @@
 
 It generates a series midi sequences in real time, then play them out and output the midi notes.
 
-
+[Try it here](http://chaostao.org/pd/)
 
 <br>
-
-
--------
 
 ##### How to run
 Getting files with Ajax might fail on local machine. Start a local server and access all the example web pages through it.
