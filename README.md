@@ -33,4 +33,4 @@ Getting files with Ajax might fail on local machine. Start a local server and ac
 [Check detail setup](https://github.com/sebpiq/WebPd#i-cant-run-any-webpd-demo-on-my-computer).
 
 ----
-cheers~ <br>Contra @avantcontra www.contra.im dadadaluo[at]gmail.com
+cheers~ <br>Contra @avantcontra dadadaluo[at]gmail.com
