@@ -4,7 +4,7 @@
 
 It generates a series midi sequences in real time, then play them out and output the midi notes.
 
-[Try it here](http://chaostao.org/pd/) (Now maybe desktop chrome only)
+[Try it here](https://www.floatbug.com/chaostao/) (Now maybe desktop chrome only)
 
 <br>
 
@@ -14,7 +14,7 @@ It generates a series midi sequences in real time, then play them out and output
 
 The algorithm behind is "[Chaos](https://en.wikipedia.org/wiki/Chaos)".
 
-![alt text](http://chaostao.org/pd/examples/assets/chaos.jpg)
+![alt text](https://www.floatbug.com/chaostao/examples/assets/chaos.jpg)
 
 Programming Language is `Pure Data (Pd vanilla)`, using `WebPd` to play in web browser.
 
