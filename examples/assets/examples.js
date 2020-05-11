@@ -2,10 +2,15 @@ webPdExamples = {
   
   init: function() {
     $('#startButton').click(function() {
-      $(this).fadeOut(200, function() { $('#controls').fadeIn(200) })
-      Pd.start()
-
-      
+      // $(this).fadeOut(200, function() { $('#controls').fadeIn(200) })
+      if($('#startButton').text() === "Stop") {
+        $('#startButton').html("Click to Start");
+        Pd.stop()
+      } else {
+        Pd.start()
+        $('#startButton').html("Stop");
+      }
+     
     })
   },
 
