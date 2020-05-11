@@ -4,7 +4,9 @@
 
 It generates a series midi sequences in real time, then play them out and output the midi notes.
 
-[Try it here](https://www.floatbug.com/chaostao/) (Now maybe desktop chrome only)
+You can open a midi synthesiser like garageband (on Mac) to get more sound effects.
+
+[Try it here](https://www.floatbug.com/chaostao/) (Now maybe chrome only)
 
 <br>
 
