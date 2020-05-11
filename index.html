@@ -1,97 +1,119 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
   <meta charset="utf-8">
-    <title>Chaos Tao - an algorithmic music generator</title>
-    
-    <script src="js/jquery-2.1.4.min.js"></script>
-    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
-    <script src="js/webpd-latest.min.js"></script>
-    <!-- <script type="text/javascript" src="../../dist/webpd-latest.min.js"></script> -->
-    <script type="text/javascript" src="examples/assets/examples.js"></script>
+  <title>Chaos Tao - an algorithmic music generator</title>
 
-  </head>
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+  <script src="js/webpd-latest.min.js"></script>
+  <!-- <script type="text/javascript" src="../../dist/webpd-latest.min.js"></script> -->
+  <script type="text/javascript" src="examples/assets/examples.js"></script>
 
-  <body>
-    <div id="loading">Loading ...</div>
+</head>
 
-    <div id="des">"Chaos Tao" is an algorithmic music generator.
-      <br/>It generates a series midi sequences in real time, then play them out and output the midi notes.<br/>
-      You can open a midi synthesiser to get more sound effects.
-    </div>
-    <div>
-      More info here: <a href="https://github.com/avantcontra/chaostao" target="_blank">github.com/avantcontra/chaostao</a> 
-    </div>
-    <br/>
-    <button id="startButton">Click to Start</button>
-    
-    <div id="svg"></div>
-    <div id="pdfuNote">Pd patch rendered to SVG using <a href="https://github.com/sebpiq/pd-fileutils">pd-fileutils</a></div>
-    <script type="text/javascript">
-      webPdExamples.init()
-    
-      var patch
-      $.get('patches/chaos_0.925_without_tab.pd', function(mainStr) {
-        // Loading the patch
-        patch = Pd.loadPatch(mainStr)
+<body>
+  <div id="loading">Loading ...</div>
 
-        webPdExamples.patchLoaded(mainStr)
-      })
+  <div id="des">"Chaos Tao" is an algorithmic music generator.
+    <br />It generates a series midi sequences in real time, then play them out and output the midi notes.<br />
+    You can open a midi synthesiser to get more sound effects.
+    <br />
+    PS: You should access this page using 'https' not 'http'.
+  </div>
+  <div>
+    More info here: <a href="https://github.com/avantcontra/chaostao"
+      target="_blank">github.com/avantcontra/chaostao</a>
+  </div>
+  <br />
+  
+  <button id="startButton">Click to Start</button>
 
-      var context=null;   
-      var midiAccess=null;  
-      window.addEventListener('load', function() {
+  <div id="svg"></div>
+  </div>
+  <script type="text/javascript">
+    webPdExamples.init()
+
+    var patch
+    $.get('patches/chaos_0.925_without_tab.pd', function (mainStr) {
+      // Loading the patch
+      patch = Pd.loadPatch(mainStr)
+
+      webPdExamples.patchLoaded(mainStr)
+    })
+
+    var context = null;
+    var midiAccess = null;
+    window.addEventListener('load', function () {
       // patch up prefixes
-        window.AudioContext=window.AudioContext||window.webkitAudioContext;
-        context = new AudioContext();
-        if (navigator.requestMIDIAccess)
-          navigator.requestMIDIAccess().then( onMIDIInit, onMIDIReject );
-        else
-          alert("oops, no MIDI support present in your browser.")
-      } );
+      // window.AudioContext=window.AudioContext||window.webkitAudioContext;
+      // context = new AudioContext();
 
-      function onMIDIInit(midi) {
-        midiAccess = midi;
-        hookUpMIDIOutput();
-        midiAccess.onstatechange=hookUpMIDIOutput;
-      }
-
-      function onMIDIReject(err) {
-        alert("oops, the MIDI system failed to start.");
-      }
-
-      function hookUpMIDIOutput() {
-        //console.log(" in hookUpMIDIOutput");
-        var haveAtLeastOneDevice=false;
-
-        for (var input of midiAccess.outputs.values()) {
-          input.send( [0x90, 80, 0x64] );//0x90, 60, 0x7f
-          haveAtLeastOneDevice = true;
-
-          console.log( "Output port [type:'" + input.type + "'] id:'" + input.id +
-          "' manufacturer:'" + input.manufacturer + "' name:'" + input.name +
-          "' version:'" + input.version + "'" );
-        }
-
-        Pd.receive('midiout', function(args) {
-          console.log('received a message from "midiout" : ', args)
-          for (var input of midiAccess.outputs.values()) {
-            input.send( [0x90, args, 0x64] );//0x90, 60, 0x7f
-            haveAtLeastOneDevice = true;
-
+      navigator.permissions.query({ name: 'midi' }).then(function (result) {
+        console.log('permission result', result)
+        if (result.state == 'granted') {
+          if (navigator.requestMIDIAccess) {
+            navigator.requestMIDIAccess({
+              sysex: true
+            }).then(onMIDIInit, onMIDIReject);
           }
-        })
+          else {
+            alert("oops, no MIDI support present in your browser.")
+          }
+        } else {//if (result.state == 'prompt') {
+            alert("oops, no MIDI support present in your browser.")
+        }
+        // Don't do anything if the permission was denied.
+      });
+
+
+    });
+
+    function onMIDIInit(midi) {
+      midiAccess = midi;
+      hookUpMIDIOutput();
+      midiAccess.onstatechange = hookUpMIDIOutput;
+    }
+
+    function onMIDIReject(err) {
+      alert("oops, the MIDI system failed to start.");
+    }
+
+    function hookUpMIDIOutput() {
+      //console.log(" in hookUpMIDIOutput");
+      var haveAtLeastOneDevice = false;
+
+      for (var input of midiAccess.outputs.values()) {
+        input.send([0x90, 80, 0x64]);//0x90, 60, 0x7f
+        haveAtLeastOneDevice = true;
+
+        console.log("Output port [type:'" + input.type + "'] id:'" + input.id +
+          "' manufacturer:'" + input.manufacturer + "' name:'" + input.name +
+          "' version:'" + input.version + "'");
       }
-    </script>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-68576315-1', 'auto');
-      ga('send', 'pageview');
+      Pd.receive('midiout', function (args) {
+        console.log('received a message from "midiout" : ', args)
+        for (var input of midiAccess.outputs.values()) {
+          input.send([0x90, args, 0x64]);//0x90, 60, 0x7f
+          haveAtLeastOneDevice = true;
+        }
+      })
+    }
+  </script>
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    </script>
-  </body>
+    ga('create', 'UA-68576315-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+
 </html>
