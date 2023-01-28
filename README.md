@@ -36,5 +36,8 @@ Getting files with Ajax might fail on local machine. Start a local server and ac
 
 ----
 cheers~ <br>Contra @avantcontra dadadaluo[at]gmail.com
-
-[avantcontra.com](https://avantcontra.com)
+- patreon (**buy me a coffee** XD): [avantcontra](https://www.patreon.com/avantcontra)
+- website: [avantcontra.com](https://www.avantcontra.com)
+- instagram: [avantcontra](https://instagram.com/avantcontra)
+- twitter: [avantcontra](https://twitter.com/avantcontra)
+- 公/知/小/抖/B：[实验编程](https://space.bilibili.com/309452713)
