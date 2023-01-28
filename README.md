@@ -6,7 +6,7 @@ It generates a series midi sequences in real time, then play them out and output
 
 You can open a midi synthesiser like garageband (on Mac) to get more sound effects.
 
-[Try it here](https://www.floatbug.com/chaostao/) (Now maybe chrome only)
+[Try it here](https://avantcontra.com/webapp/chaostao/) (Now maybe chrome only)
 
 <br>
 
@@ -16,7 +16,7 @@ You can open a midi synthesiser like garageband (on Mac) to get more sound effec
 
 The algorithm behind is "[Chaos](https://en.wikipedia.org/wiki/Chaos)".
 
-![alt text](https://www.floatbug.com/chaostao/examples/assets/chaos.jpg)
+![alt text](https://www.avantcontra.com/webapp/chaostao/examples/assets/chaos.jpg)
 
 Programming Language is `Pure Data (Pd vanilla)`, using `WebPd` to play in web browser.
 
@@ -36,3 +36,5 @@ Getting files with Ajax might fail on local machine. Start a local server and ac
 
 ----
 cheers~ <br>Contra @avantcontra dadadaluo[at]gmail.com
+
+[avantcontra.com](https://avantcontra.com)
